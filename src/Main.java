@@ -1,15 +1,44 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        String str = "hello world qwerty world";
+        int n = 2;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        List<String> result = findWordsByFrequency(str, n);
+
+        if (result.isEmpty()) {
+            System.out.println("Нет слов, встречающихся " + n + " раз(а)");
+        } else {
+            System.out.println("Слова, встречающиеся " + n + " раз(а): " + result);
         }
+    }
+
+    /**
+     * Метод возвращает список слов, которые встречаются ровно n раз
+     */
+    public static List<String> findWordsByFrequency(String str, int n) {
+        if (str == null || str.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        String[] words = str.split("\\s+"); // разбиваем строку по пробелам
+        Map<String, Integer> frequencyMap = new HashMap<>();
+
+        // Подсчёт слов
+        for (String word : words) {
+            frequencyMap.put(word, frequencyMap.getOrDefault(word, 0) + 1);
+        }
+
+        // Фильтруем слова с частотой n
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : frequencyMap.entrySet()) {
+            if (entry.getValue() == n) {
+                result.add(entry.getKey());
+            }
+        }
+
+        return result;
     }
 }
